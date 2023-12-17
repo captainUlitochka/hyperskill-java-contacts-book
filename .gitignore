@@ -1,0 +1,12 @@
+/.idea/
+/.gradle/
+/Contacts (Java)/Create a menu/
+/Contacts (Java)/First contact/
+/Contacts (Java)/Searching/
+/Contacts (Java)/Upgrade your contacts/
+/Contacts (Java)/task/build/
+/Contacts (Java)/task/out/
+*.yml
+*.xml
+*.class
+*.css
