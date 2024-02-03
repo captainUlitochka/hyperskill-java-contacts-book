@@ -14,7 +14,7 @@ public enum Messages {
     WRONG_FORMAT("Wrong number format!\n"),
     SELECT_RECORD("Select a record: \n"),
     SELECT_FIELD("Select a field (name, surname, number): \n"),
-    RECORD("%d. %s %s, %s%n");
+    RECORD("%d. %s");
 
     private final String message;
 

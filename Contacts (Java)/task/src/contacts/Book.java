@@ -25,7 +25,7 @@ public class Book {
                 case "remove" -> removeContact();
                 case "edit" -> editContact();
                 case "count" -> countContacts();
-                case "list" -> showContactsList();
+                case "info" -> showContactInfo();
                 case "exit" -> {
                     return;
                 }
@@ -35,15 +35,13 @@ public class Book {
         }
     }
 
-    private void showContactsList() {
+    private void showContactInfo() {
         if (!contactList.isEmpty()) {
             for (Contact contact : contactList) {
                 out.printf(
                         Messages.RECORD.getMessage(),
                         contactList.indexOf(contact) + 1,
-                        contact.getFirstName(),
-                        contact.getLastName(),
-                        contact.getPhoneNumber());
+                        contact.printContactName());
             }
         } else {
             out.printf(Messages.NOTHING_TO_DO.getMessage(), "show");
@@ -59,7 +57,7 @@ public class Book {
         Scanner numsIn = new Scanner(System.in);
         if (!contactList.isEmpty()) {
             Scanner scanner = new Scanner(System.in);
-            showContactsList();
+            showContactInfo();
             out.print(Messages.SELECT_RECORD.getMessage());
             int recordId = numsIn.nextInt() - 1;
 
@@ -74,7 +72,7 @@ public class Book {
                     contactList.get(recordId).setLastName(surname);
                 } else if (field.equals("number")) {
                     String number = scanner.nextLine();
-                    contactList.get(recordId).setPhoneNumber(number);
+                    personList.get(recordId).setPhoneNumber(number);
                 } else {
                     out.printf(Messages.INVALID_DATA.getMessage(), "command");
                 }
@@ -87,13 +85,13 @@ public class Book {
 
     private void removeContact() {
         Scanner in = new Scanner(System.in);
-        if (!contactList.isEmpty()) {
-            showContactsList();
+        if (!personList.isEmpty()) {
+            showContactInfo();
             out.print(Messages.SELECT_RECORD.getMessage());
             int recordId = in.nextInt() - 1;
 
-            if (recordId <= contactList.size() && recordId >= 0) {
-                contactList.remove(recordId);
+            if (recordId <= personList.size() && recordId >= 0) {
+                personList.remove(recordId);
                 out.printf(Messages.RECORD_SUCCESS.getMessage(), "removed");
             } else out.printf(Messages.INVALID_DATA.getMessage(), "record number");
         } else out.printf(Messages.NOTHING_TO_DO.getMessage(), "remove");
@@ -109,13 +107,16 @@ public class Book {
         String number = in.nextLine();
 
         try {
-            Contact contact = new Contact(nextId, firstName, lastName, number);
+            Person person = new Person(nextId, firstName, lastName, number);
             nextId++;
-            contactList.add(contact);
+            personList.add(person);
         } catch (Exception e) {
             out.println(e.getMessage());
         }
 
         out.printf(Messages.RECORD_SUCCESS.getMessage(), "added");
     }
+
+    //TODO: переименовать список
+
 }
