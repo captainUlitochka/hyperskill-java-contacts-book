@@ -1,7 +1,7 @@
 package contacts;
 
 public enum Messages {
-    COMMAND_LIST("Enter action (add, remove, edit, count, list, exit): \n"),
+    COMMAND_LIST("\nEnter action (add, remove, edit, count, info, exit): \n"),
     RECORDS_COUNT("The Phone Book has %d records.%n"),
     ENTER_DATA("Enter the %s:\n"),
     BAD_DATA("Bad %s!\n"),
