@@ -12,6 +12,7 @@ public class Organization extends Contact {
         setPhoneNumber(inputNumber);
         setPerson(false);
         setTimeCreated(LocalDateTime.now());
+        setTimeEdited(LocalDateTime.now());
     }
 
     public String getAddress() {

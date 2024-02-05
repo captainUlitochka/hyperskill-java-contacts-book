@@ -17,6 +17,7 @@ public class Person extends Contact {
         setPhoneNumber(inputNumber);
         setPerson(true);
         setTimeCreated(LocalDateTime.now());
+        setTimeEdited(LocalDateTime.now());
     }
 
 
@@ -91,7 +92,7 @@ public class Person extends Contact {
         return "Name: " + getName() +
                 "\nSurname: " + getLastName() +
                 "\nBirth Date: " + getBirthDate() +
-                "\nGender: " + getBirthDate() +
+                "\nGender: " + getGender() +
                 "\nNumber: " + getPhoneNumber() +
                 "\nTime created: " + getTimeCreated() +
                 "\nTime last edit: " + getTimeEdited();    }
