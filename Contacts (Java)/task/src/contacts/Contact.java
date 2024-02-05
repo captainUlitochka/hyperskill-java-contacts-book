@@ -1,10 +1,14 @@
 package contacts;
 
+import java.time.LocalDateTime;
+
 abstract class Contact {
     private int id;
     private String name;
     private String phoneNumber;
     private boolean isPerson;
+    private LocalDateTime timeCreated;
+    private LocalDateTime timeEdited;
 
     public int getId() {
         return id;
@@ -37,6 +41,22 @@ abstract class Contact {
 
     public void setPerson(boolean person) {
         isPerson = person;
+    }
+
+    public LocalDateTime getTimeCreated() {
+        return timeCreated;
+    }
+
+    public void setTimeCreated(LocalDateTime timeCreated) {
+        this.timeCreated = timeCreated;
+    }
+
+    public LocalDateTime getTimeEdited() {
+        return timeEdited;
+    }
+
+    public void setTimeEdited(LocalDateTime timeEdited) {
+        this.timeEdited = timeEdited;
     }
 
     private boolean checkPhoneNumber(String phoneNumber) {

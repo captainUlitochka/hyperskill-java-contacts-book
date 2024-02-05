@@ -1,5 +1,7 @@
 package contacts;
 
+import java.time.LocalDateTime;
+
 public class Person extends Contact {
 
     private String lastName;
@@ -12,6 +14,7 @@ public class Person extends Contact {
         setLastName(inputLastName);
         setPhoneNumber(inputNumber);
         setPerson(true);
+        setTimeCreated(LocalDateTime.now());
     }
 
 
@@ -49,16 +52,24 @@ public class Person extends Contact {
             case "number" -> setPhoneNumber(inputValue);
             default -> System.out.println(Messages.INVALID_CMD.getMessage());
         }
+        setTimeEdited(LocalDateTime.now()); //TODO: но так будет обновляться время даже при подаче некорректной команды
     }
 
     @Override
     String printContactName() {
-        return null;
+        return getId() + ". " +
+                getName() + " " +
+                getLastName();
     }
 
     @Override
     String printContactInfo() {
-        return null;
-    }
+        return "Name: " + getName() +
+                "\nSurname: " + getLastName() +
+                "\nBirth Date: " + getBirthDate() +
+                "\nGender: " + getBirthDate() +
+                "\nNumber: " + getPhoneNumber() +
+                "\nTime created: " + getTimeCreated() +
+                "\nTime last edit: " + getTimeEdited();    }
 
 }
