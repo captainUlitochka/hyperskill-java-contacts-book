@@ -37,29 +37,20 @@ public class Book {
     }
 
     private void showContactList() {
-        Scanner contactId = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         if (!contactList.isEmpty()) {
             for (Contact contact : contactList) {
                 out.printf(
-                        Messages.RECORD.getMessage(),
-                        contactList.indexOf(contact) + 1,
                         contact.printContactName());
             }
-            out.println(showContactInfo(contactId.nextInt()));
+            int contactId = input.nextInt();
+            if (contactId <= contactList.size()) {
+                out.println(contactList.get(contactId - 1).printContactInfo());
+            } else out.printf(Messages.INVALID_DATA.getMessage(), "record id");
+
         } else {
             out.printf(Messages.NOTHING_TO_DO.getMessage(), "show");
         }
-//TODO: этот метод не должен вызывать следующий, так как используется в редактировании без "прицепа"
-    }
-
-    private String showContactInfo(int contactId) {
-        out.println(Messages.ENTER_CONTACT_ID.getMessage());
-        if (contactId <= contactList.size()) {
-            return contactList.get(contactId + 1).printContactInfo();
-        } else {
-            return Messages.INVALID_CMD.getMessage();
-        }
-
     }
 
     private void countContacts() {
@@ -67,17 +58,22 @@ public class Book {
     }
 
     private void editContact() {
-        Scanner input = new Scanner(System.in);
-        for (Contact contact : contactList) {
-            contact.printContactName();
-        }
-        out.println(Messages.SELECT_RECORD.getMessage());
-        int contactId = input.nextInt();
-        String fieldName = input.nextLine();
-        String newValue = input.nextLine();
-        if (contactList.get(contactId + 1).editContact(fieldName, newValue)) {
-            out.printf(Messages.RECORD_SUCCESS.getMessage(), "updated");
-        }
+        if (!contactList.isEmpty()) {
+            Scanner numsInput = new Scanner(System.in);
+            Scanner stringsInput = new Scanner(System.in);
+            for (Contact contact : contactList) {
+                contact.printContactName();
+            }
+            out.println(Messages.SELECT_RECORD.getMessage());
+            int contactId = numsInput.nextInt();
+            String fieldName = stringsInput.nextLine();
+            String newValue = stringsInput.nextLine();
+            if (contactList.get(contactId + 1).editContact(fieldName, newValue)) {
+                out.printf(Messages.RECORD_SUCCESS.getMessage(), "updated");
+            }
+            numsInput.close();
+            stringsInput.close();
+        } else out.printf(Messages.NOTHING_TO_DO.getMessage(), "edit");
     }
 
     private void removeContact() {
