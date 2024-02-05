@@ -8,10 +8,12 @@ public class Person extends Contact {
     private String gender;
     private String birthDate;
 
-    public Person(int id, String inputFirstName, String inputLastName, String inputNumber) {
+    public Person(int id, String inputFirstName, String inputLastName, String inputBirthDate, String inputGender, String inputNumber) {
         setId(id);
         setName(inputFirstName);
         setLastName(inputLastName);
+        setBirthDate(inputBirthDate);
+        setGender(inputGender);
         setPhoneNumber(inputNumber);
         setPerson(true);
         setTimeCreated(LocalDateTime.now());
@@ -43,16 +45,38 @@ public class Person extends Contact {
     }
 
     @Override
-    void editContact(String fieldName, String inputValue) {
+    boolean editContact(String fieldName, String inputValue) {
         switch (fieldName) {
-            case "surname" -> setLastName(inputValue);
-            case "name" -> setName(inputValue);
-            case "gender" -> setGender(inputValue);
-            case "birth" -> setBirthDate(inputValue);
-            case "number" -> setPhoneNumber(inputValue);
-            default -> System.out.println(Messages.INVALID_CMD.getMessage());
+            case "surname" -> {
+                setLastName(inputValue);
+                setTimeEdited(LocalDateTime.now());
+                return true;
+            }
+            case "name" -> {
+                setName(inputValue);
+                setTimeEdited(LocalDateTime.now());
+                return true;
+            }
+            case "gender" -> {
+                setGender(inputValue);
+                setTimeEdited(LocalDateTime.now());
+                return true;
+            }
+            case "birth" -> {
+                setBirthDate(inputValue);
+                setTimeEdited(LocalDateTime.now());
+                return true;
+            }
+            case "number" -> {
+                setPhoneNumber(inputValue);
+                setTimeEdited(LocalDateTime.now());
+                return true;
+            }
+            default -> {
+                System.out.println(Messages.INVALID_CMD.getMessage());
+                return false;
+            }
         }
-        setTimeEdited(LocalDateTime.now()); //TODO: но так будет обновляться время даже при подаче некорректной команды
     }
 
     @Override

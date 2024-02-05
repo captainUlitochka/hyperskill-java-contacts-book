@@ -64,7 +64,7 @@ abstract class Contact {
         return phoneNumber.matches(regex);
     }
 
-    abstract void editContact(String fieldName, String inputValue);
+    abstract boolean editContact(String fieldName, String inputValue);
 
     abstract String printContactName();
     abstract String printContactInfo();

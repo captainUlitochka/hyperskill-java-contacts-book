@@ -5,10 +5,11 @@ import java.time.LocalDateTime;
 public class Organization extends Contact {
     private String address;
 
-    public Organization(int id, String inputName, String inputAddress) {
+    public Organization(int id, String inputName, String inputAddress, String inputNumber) {
         setId(id);
         setName(inputName);
         setAddress(inputAddress);
+        setPhoneNumber(inputNumber);
         setPerson(false);
         setTimeCreated(LocalDateTime.now());
     }
@@ -22,13 +23,23 @@ public class Organization extends Contact {
     }
 
     @Override
-    void editContact(String fieldName, String inputValue) {
+    boolean editContact(String fieldName, String inputValue) {
         switch (fieldName) {
-            case "address" -> setAddress(inputValue);
-            case "phone" -> setPhoneNumber(inputValue);
-            default -> System.out.println(Messages.INVALID_CMD.getMessage());
+            case "address" -> {
+                setAddress(inputValue);
+                setTimeEdited(LocalDateTime.now());
+                return true;
+            }
+            case "phone" -> {
+                setPhoneNumber(inputValue);
+                setTimeEdited(LocalDateTime.now());
+                return true;
+            }
+            default -> {
+                System.out.println(Messages.INVALID_CMD.getMessage());
+                return false;
+            }
         }
-        setTimeEdited(LocalDateTime.now()); //TODO: но так будет обновляться время даже при подаче некорректной команды
     }
 
     @Override
