@@ -9,7 +9,7 @@ public enum Messages {
     NOTHING_TO_DO("No records to %s%n"),
     INVALID_DATA("Invalid %s%n"),
     INVALID_CMD("Invalid command!\n"),
-    NO_NUMBER("[no number]\n"),
+    NO_DATA("[no data]"),
     WRONG_FORMAT("Wrong number format!\n"),
     SELECT_RECORD("Select a record: \n"),
     SELECT_FIELD("Select a field (name, surname, number): \n"),
