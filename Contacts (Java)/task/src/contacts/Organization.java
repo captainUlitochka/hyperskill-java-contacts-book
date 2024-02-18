@@ -15,6 +15,10 @@ public class Organization extends Contact {
         setTimeEdited(LocalDateTime.now());
     }
 
+    public Organization() {
+        setPerson(false);
+    }
+
     public String getAddress() {
         return address;
     }
@@ -50,10 +54,20 @@ public class Organization extends Contact {
 
     @Override
     String printContactInfo() {
-        return "Organization name: " + getName() +
-                "\nAddress: " + getAddress() +
-                "\nNumber: " + getPhoneNumber() +
-                "\nTime created: " + getTimeCreated() +
-                "\nTime last edit: " + getTimeEdited();
+        return "Organization name: " + getName() + "\nAddress: " + getAddress() + "\nNumber: " + getPhoneNumber() + "\nTime created: " + getTimeCreated() + "\nTime last edit: " + getTimeEdited();
+    }
+
+    @Override
+    void setField(String fieldName, String fieldValue) {
+        if (fieldName.equals(OrganizationFields.NAME.getName())) {
+            setName(fieldValue);
+        }
+        if (fieldName.equals(OrganizationFields.ADDRESS.getName())) {
+            setAddress(fieldValue);
+        }
+        if (fieldName.equals(OrganizationFields.NUMBER.getName())) {
+            setPhoneNumber(fieldValue);
+        }
+
     }
 }

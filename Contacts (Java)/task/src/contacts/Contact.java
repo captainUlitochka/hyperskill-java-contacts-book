@@ -32,7 +32,7 @@ abstract class Contact {
 
     public void setPhoneNumber(String phoneNumber) {
         if (checkPhoneNumber(phoneNumber)) this.phoneNumber = phoneNumber;
-        else this.phoneNumber = Messages.NO_NUMBER.getMessage();
+        else this.phoneNumber = Messages.NO_DATA.getMessage();
     }
 
     public boolean isPerson() {
@@ -68,6 +68,7 @@ abstract class Contact {
 
     abstract String printContactName();
     abstract String printContactInfo();
+    abstract void setField(String fieldName, String fieldValue);
 
     //TODO: абстрактный метод на редактирование, а в Book вызывать для конкретного объекта из списка
 }

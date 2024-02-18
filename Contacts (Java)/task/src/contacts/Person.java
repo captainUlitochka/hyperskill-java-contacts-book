@@ -20,6 +20,10 @@ public class Person extends Contact {
         setTimeEdited(LocalDateTime.now());
     }
 
+    public Person() {
+        setPerson(true);
+    }
+
 
     public String getLastName() {
         return lastName;
@@ -34,7 +38,11 @@ public class Person extends Contact {
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        if (gender.equals("M") || gender.equals("F")) this.gender = gender;
+        else {
+            this.gender = Messages.NO_DATA.getMessage();
+            System.out.printf(Messages.BAD_DATA.getMessage(), "gender");
+        }
     }
 
     public String getBirthDate() {
@@ -42,7 +50,13 @@ public class Person extends Contact {
     }
 
     public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
+        if (!birthDate.isEmpty()) {
+            this.birthDate = birthDate;
+        } else {
+            this.birthDate = Messages.NO_DATA.getMessage();
+            System.out.printf(Messages.BAD_DATA.getMessage(), "birth date");
+        }
+
     }
 
     @Override
@@ -95,6 +109,27 @@ public class Person extends Contact {
                 "\nGender: " + getGender() +
                 "\nNumber: " + getPhoneNumber() +
                 "\nTime created: " + getTimeCreated() +
-                "\nTime last edit: " + getTimeEdited();    }
+                "\nTime last edit: " + getTimeEdited();
+    }
+
+    @Override
+    void setField(String fieldName, String fieldValue) {
+        if (fieldName.equals(PersonFields.NAME.getShortName())) {
+            setName(fieldValue);
+        }
+        if (fieldName.equals(PersonFields.SURNAME.getShortName())) {
+            setLastName(fieldValue);
+        }
+        if (fieldName.equals(PersonFields.BIRTH_DATE.getShortName())) {
+            setBirthDate(fieldValue);
+        }
+        if (fieldName.equals(PersonFields.GENDER.getShortName())) {
+            setGender(fieldValue);
+        }
+        if (fieldName.equals(PersonFields.NUMBER.getShortName())) {
+            setPhoneNumber(fieldValue);
+        }
+
+    }
 
 }
