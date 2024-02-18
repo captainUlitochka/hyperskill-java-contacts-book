@@ -1,5 +1,6 @@
 package contacts;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -98,43 +99,29 @@ public class Book {
         String contactType = input.nextLine();
 
         if (contactType.equals("person")) {
-            out.printf(Messages.ENTER_DATA.getMessage(), "name");
-            String name = input.nextLine();
-            out.printf(Messages.ENTER_DATA.getMessage(), "surname");
-            String lastName = input.nextLine();
-            out.printf(Messages.ENTER_DATA.getMessage(), "birth date");
-            String birthDate = input.nextLine();
-            out.printf(Messages.ENTER_DATA.getMessage(), "gender (M, F)");
-            String gender = input.nextLine();
-            out.printf(Messages.ENTER_DATA.getMessage(), "number");
-            String personNumber = input.nextLine();
-            Person person = new Person(nextId, name, lastName, birthDate, gender, personNumber);
-            contactList.add(person);
-            nextId++;
+            Person newPerson = new Person();
+            for (PersonFields fields : PersonFields.values()) {
+                out.printf(Messages.ENTER_DATA.getMessage(), fields.getFullName());
+                String value = input.nextLine();
+                newPerson.setField(fields.getFullName(), value);
+                newPerson.setId(nextId);
+                newPerson.setTimeCreated(LocalDateTime.now());
+                newPerson.setTimeEdited(LocalDateTime.now());
+                contactList.add(newPerson);
+            }
         } else if (contactType.equals("organization")) {
-            out.printf(Messages.ENTER_DATA.getMessage(), "organization name");
-            String orgName = input.nextLine();
-            out.printf(Messages.ENTER_DATA.getMessage(), "address");
-            String address = input.nextLine();
-            out.printf(Messages.ENTER_DATA.getMessage(), "number");
-            String orgNumber = input.nextLine();
-            Organization organization = new Organization(nextId, orgName, address, orgNumber);
-            contactList.add(organization);
-            nextId++;
-        } else {
-            out.printf(Messages.INVALID_DATA.getMessage(), "type");
+            Organization newOrganization = new Organization();
+            for (OrganizationFields fields : OrganizationFields.values()) {
+                out.printf(Messages.ENTER_DATA.getMessage(), fields.getName());
+                String value = input.nextLine();
+                newOrganization.setField(fields.getName(), value);
+                newOrganization.setId(nextId);
+                newOrganization.setTimeCreated(LocalDateTime.now());
+                newOrganization.setTimeEdited(LocalDateTime.now());
+                contactList.add(newOrganization);
+            }
         }
-
-        /*
-        try {
-            Person person = new Person(nextId, firstName, lastName, number);
-            nextId++;
-            personList.add(person);
-        } catch (Exception e) {
-            out.println(e.getMessage());
-        }
-
-         */
+        nextId++;
         out.printf(Messages.RECORD_SUCCESS.getMessage(), "added");
     }
 
