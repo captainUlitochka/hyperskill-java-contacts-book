@@ -63,13 +63,16 @@ public class Book {
             Scanner numsInput = new Scanner(System.in);
             Scanner stringsInput = new Scanner(System.in);
             for (Contact contact : contactList) {
-                contact.printContactName();
+                out.printf(
+                        contact.printContactName());
             }
             out.println(Messages.SELECT_RECORD.getMessage());
+            //TODO: nothing works here right now
             int contactId = numsInput.nextInt();
+            out.println(Messages.COMMAND_LIST.getMessage());
             String fieldName = stringsInput.nextLine();
             String newValue = stringsInput.nextLine();
-            if (contactList.get(contactId + 1).editContact(fieldName, newValue)) {
+            if (contactList.get(contactId).editContact(fieldName, newValue)) {
                 out.printf(Messages.RECORD_SUCCESS.getMessage(), "updated");
             }
             numsInput.close();
@@ -98,29 +101,12 @@ public class Book {
         out.println(Messages.CHOOSE_CONTACT_TYPE.getMessage());
         String contactType = input.nextLine();
 
-        if (contactType.equals("person")) {
-            Person newPerson = new Person();
-            for (PersonFields fields : PersonFields.values()) {
-                out.printf(Messages.ENTER_DATA.getMessage(), fields.getFullName());
-                String value = input.nextLine();
-                newPerson.setField(fields.getFullName(), value);
-                newPerson.setId(nextId);
-                newPerson.setTimeCreated(LocalDateTime.now());
-                newPerson.setTimeEdited(LocalDateTime.now());
-                contactList.add(newPerson);
-            }
-        } else if (contactType.equals("organization")) {
-            Organization newOrganization = new Organization();
-            for (OrganizationFields fields : OrganizationFields.values()) {
-                out.printf(Messages.ENTER_DATA.getMessage(), fields.getName());
-                String value = input.nextLine();
-                newOrganization.setField(fields.getName(), value);
-                newOrganization.setId(nextId);
-                newOrganization.setTimeCreated(LocalDateTime.now());
-                newOrganization.setTimeEdited(LocalDateTime.now());
-                contactList.add(newOrganization);
-            }
-        }
+        Contact newContact = contactType.equals("person") ? new Person() : new Organization();
+        newContact.inputFields();
+        newContact.setId(nextId);
+        newContact.setTimeCreated(LocalDateTime.now());
+        newContact.setTimeEdited(LocalDateTime.now());
+        contactList.add(newContact);
         nextId++;
         out.printf(Messages.RECORD_SUCCESS.getMessage(), "added");
     }

@@ -1,19 +1,12 @@
 package contacts;
 
 import java.time.LocalDateTime;
+import java.util.Scanner;
+
+import static java.lang.System.out;
 
 public class Organization extends Contact {
     private String address;
-
-    public Organization(int id, String inputName, String inputAddress, String inputNumber) {
-        setId(id);
-        setName(inputName);
-        setAddress(inputAddress);
-        setPhoneNumber(inputNumber);
-        setPerson(false);
-        setTimeCreated(LocalDateTime.now());
-        setTimeEdited(LocalDateTime.now());
-    }
 
     public Organization() {
         setPerson(false);
@@ -49,7 +42,7 @@ public class Organization extends Contact {
 
     @Override
     String printContactName() {
-        return getId() + ". " + getName();
+        return getId() + ". " + getName() + "\n";
     }
 
     @Override
@@ -69,5 +62,15 @@ public class Organization extends Contact {
             setPhoneNumber(fieldValue);
         }
 
+    }
+
+    @Override
+    void inputFields() {
+        Scanner input = new Scanner(System.in);
+        for (OrganizationFields fields : OrganizationFields.values()) {
+            out.printf(Messages.ENTER_DATA.getMessage(), fields.getName());
+            String value = input.nextLine();
+            setField(fields.getName(), value);
+        }
     }
 }

@@ -67,8 +67,10 @@ abstract class Contact {
     abstract boolean editContact(String fieldName, String inputValue);
 
     abstract String printContactName();
+
     abstract String printContactInfo();
+
     abstract void setField(String fieldName, String fieldValue);
 
-    //TODO: абстрактный метод на редактирование, а в Book вызывать для конкретного объекта из списка
+    abstract void inputFields();
 }

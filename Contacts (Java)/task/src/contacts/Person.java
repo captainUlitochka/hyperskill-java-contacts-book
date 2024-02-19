@@ -1,24 +1,15 @@
 package contacts;
 
 import java.time.LocalDateTime;
+import java.util.Scanner;
+
+import static java.lang.System.out;
 
 public class Person extends Contact {
 
     private String lastName;
     private String gender;
     private String birthDate;
-
-    public Person(int id, String inputFirstName, String inputLastName, String inputBirthDate, String inputGender, String inputNumber) {
-        setId(id);
-        setName(inputFirstName);
-        setLastName(inputLastName);
-        setBirthDate(inputBirthDate);
-        setGender(inputGender);
-        setPhoneNumber(inputNumber);
-        setPerson(true);
-        setTimeCreated(LocalDateTime.now());
-        setTimeEdited(LocalDateTime.now());
-    }
 
     public Person() {
         setPerson(true);
@@ -50,7 +41,7 @@ public class Person extends Contact {
     }
 
     public void setBirthDate(String birthDate) {
-        if (!birthDate.isEmpty()) {
+        if (birthDate.length() > 1) {
             this.birthDate = birthDate;
         } else {
             this.birthDate = Messages.NO_DATA.getMessage();
@@ -96,40 +87,42 @@ public class Person extends Contact {
 
     @Override
     String printContactName() {
-        return getId() + ". " +
-                getName() + " " +
-                getLastName();
+        return getId() + ". " + getName() + " " + getLastName() + "\n";
     }
 
     @Override
     String printContactInfo() {
-        return "Name: " + getName() +
-                "\nSurname: " + getLastName() +
-                "\nBirth Date: " + getBirthDate() +
-                "\nGender: " + getGender() +
-                "\nNumber: " + getPhoneNumber() +
-                "\nTime created: " + getTimeCreated() +
-                "\nTime last edit: " + getTimeEdited();
+        return "Name: " + getName() + "\nSurname: " + getLastName() + "\nBirth date: " + getBirthDate() + "\nGender: " + getGender() + "\nNumber: " + getPhoneNumber() + "\nTime created: " + getTimeCreated() + "\nTime last edit: " + getTimeEdited();
     }
 
     @Override
     void setField(String fieldName, String fieldValue) {
-        if (fieldName.equals(PersonFields.NAME.getShortName())) {
+        if (fieldName.equals(PersonFields.NAME.getFullName())) {
             setName(fieldValue);
         }
-        if (fieldName.equals(PersonFields.SURNAME.getShortName())) {
+        if (fieldName.equals(PersonFields.SURNAME.getFullName())) {
             setLastName(fieldValue);
         }
-        if (fieldName.equals(PersonFields.BIRTH_DATE.getShortName())) {
+        if (fieldName.equals(PersonFields.BIRTH_DATE.getFullName())) {
             setBirthDate(fieldValue);
         }
-        if (fieldName.equals(PersonFields.GENDER.getShortName())) {
+        if (fieldName.equals(PersonFields.GENDER.getFullName())) {
             setGender(fieldValue);
         }
-        if (fieldName.equals(PersonFields.NUMBER.getShortName())) {
+        if (fieldName.equals(PersonFields.NUMBER.getFullName())) {
             setPhoneNumber(fieldValue);
         }
 
+    }
+
+    @Override
+    void inputFields() {
+        Scanner input = new Scanner(System.in);
+        for (PersonFields fields : PersonFields.values()) {
+            out.printf(Messages.ENTER_DATA.getMessage(), fields.getFullName());
+            String value = input.nextLine();
+            setField(fields.getFullName(), value);
+        }
     }
 
 }
