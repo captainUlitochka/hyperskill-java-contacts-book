@@ -28,7 +28,7 @@ public class Organization extends Contact {
                 setTimeEdited(LocalDateTime.now());
                 return true;
             }
-            case "phone" -> {
+            case "number" -> {
                 setPhoneNumber(inputValue);
                 setTimeEdited(LocalDateTime.now());
                 return true;
@@ -42,7 +42,7 @@ public class Organization extends Contact {
 
     @Override
     String printContactName() {
-        return getId() + ". " + getName() + "\n";
+        return getId() + ". " + getName();
     }
 
     @Override

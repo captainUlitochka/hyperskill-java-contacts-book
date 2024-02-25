@@ -87,7 +87,7 @@ public class Person extends Contact {
 
     @Override
     String printContactName() {
-        return getId() + ". " + getName() + " " + getLastName() + "\n";
+        return getId() + ". " + getName() + " " + getLastName();
     }
 
     @Override
