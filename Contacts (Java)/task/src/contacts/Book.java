@@ -2,6 +2,7 @@ package contacts;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,6 +13,7 @@ public class Book {
     private int nextId = 1;
 
     public void start() {
+        out.println(Messages.LOADING_MESSAGE.getMessage());
         contactList = new ArrayList<>();
         out.print(Messages.COMMAND_LIST.getMessage());
         showMenu();
@@ -24,10 +26,12 @@ public class Book {
             command = in.nextLine();
             switch (command) {
                 case "add" -> createContact();
-                case "remove" -> removeContact();
-                case "edit" -> editContact();
+                case "list" -> printContactCard();
+                case "search" -> searchContact();
+                //case "remove" -> removeContact();
+                //case "edit" -> editContact();
                 case "count" -> countContacts();
-                case "info" -> printContactCard();
+                //case "info" -> printContactCard();
                 case "exit" -> {
                     return;
                 }
@@ -111,6 +115,35 @@ public class Book {
         contactList.add(newContact);
         nextId++;
         out.printf(Messages.RECORD_SUCCESS.getMessage(), "added");
+    }
+
+    private void searchContact() {
+        Scanner scanner = new Scanner(System.in);
+
+
+        out.printf(Messages.ENTER_DATA.getMessage(), "search query");
+        String queryValue = scanner.nextLine();
+        performSearch(queryValue);
+
+        out.print("[search] Enter action ([number], back, again):");
+        String command = scanner.nextLine();
+        out.println("This is so boring..." + command);
+        //TODO: implement search function
+    }
+
+    private void performSearch(String queryValue) {
+        int resultCount = 0;
+        ArrayList<String> resultList = new ArrayList<>();
+        for (Contact contact : contactList) {
+            if (contact.getName()
+                    .toLowerCase()
+                    .contains(queryValue.toLowerCase())) {
+                resultCount++;
+                resultList.add(contact.printContactName());
+            }
+        }
+        out.printf("Found %d results\n", resultCount);
+        Arrays.stream(resultList.toArray()).forEach(out::println);
     }
 
 }
