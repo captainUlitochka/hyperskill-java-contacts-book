@@ -59,7 +59,6 @@ public class Book {
 
             out.print(Messages.SELECT_RECORD.getMessage());
             int contactId = inputIndex.nextInt() - 1;
-            String fieldName;
             if (contactId <= contactList.size()) {
                 out.println(contactList.get(contactId).printContactInfo());
             } else out.printf(Messages.INVALID_DATA.getMessage(), "record id");
