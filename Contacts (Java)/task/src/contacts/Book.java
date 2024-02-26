@@ -1,10 +1,8 @@
 package contacts;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.lang.System.out;
 
@@ -45,22 +43,17 @@ public class Book {
         out.printf(Messages.RECORDS_COUNT.getMessage(), contactList.size());
     }
 
-    private boolean printContactList(String actionName) {
-        if (!contactList.isEmpty()) {
-            for (Contact contact : contactList) {
-                out.println(contact.printContactName());
-            }
-            return true;
-        } else {
+    private void printContactList(String actionName) {
+        if (!contactList.isEmpty())
+            contactList.forEach(Contact::printContactName);
+        else
             out.printf(Messages.NOTHING_TO_DO.getMessage(), actionName);
-            return false;
-        }
     }
 
     private void printContactCard() {
         Scanner inputIndex = new Scanner(System.in);
-        if (printContactList("show")) {
-
+        printContactList("show");
+        if (!contactList.isEmpty()) {
             out.print(Messages.SELECT_RECORD.getMessage());
             int contactId = inputIndex.nextInt() - 1;
             if (contactId <= contactList.size()) {
@@ -72,7 +65,8 @@ public class Book {
     private void editContact() {
         Scanner inputIndex = new Scanner(System.in);
         Scanner inputLines = new Scanner(System.in);
-        if (printContactList("edit")) {
+        printContactList("edit");
+        if (!contactList.isEmpty()) {
             out.print(Messages.SELECT_RECORD.getMessage());
             int contactId = inputIndex.nextInt() - 1;
             String fieldName;
@@ -92,7 +86,8 @@ public class Book {
 
     private void removeContact() {
         Scanner inputIndex = new Scanner(System.in);
-        if (printContactList("remove")) {
+        printContactList("remove");
+        if (!contactList.isEmpty()) {
             out.print(Messages.SELECT_RECORD.getMessage());
             int contactId = inputIndex.nextInt() - 1;
             if (contactId <= contactList.size() && contactId >= 0) {
@@ -120,7 +115,6 @@ public class Book {
     private void searchContact() {
         Scanner scanner = new Scanner(System.in);
 
-
         out.printf(Messages.ENTER_DATA.getMessage(), "search query");
         String queryValue = scanner.nextLine();
         performSearch(queryValue);
@@ -132,18 +126,16 @@ public class Book {
     }
 
     private void performSearch(String queryValue) {
-        int resultCount = 0;
-        ArrayList<String> resultList = new ArrayList<>();
-        for (Contact contact : contactList) {
-            if (contact.getName()
-                    .toLowerCase()
-                    .contains(queryValue.toLowerCase())) {
-                resultCount++;
-                resultList.add(contact.printContactName());
-            }
-        }
-        out.printf("Found %d results\n", resultCount);
-        Arrays.stream(resultList.toArray()).forEach(out::println);
+        List<Contact> resultList = contactList.stream()
+                .filter(contact -> contact.getName().toLowerCase().contains(queryValue.toLowerCase()))
+                .toList();
+        out.printf("Found %d results\n", resultList.size());
+        resultList.forEach(System.out::println);
     }
+
+    //TODO: Contact list should have its own menu
+    //TODO: Search should have its own menu
+    //TODO: Numbered list must be printed outside its object
+    //TODO: Contact editing output should be changed
 
 }
